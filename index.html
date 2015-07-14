@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <title>
+            index
+        </title>
+        <script src="libs/angular/angular.min.js">
+        </script>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="css/bootstrap-dist/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="css/ionicons/css/ionicons.min.css" rel="stylesheet" />
+        <link href="css/main.css" rel="stylesheet" />
+        <script data-main="app/bootstrap" src="libs/requirejs/require.js">
+        </script>
+    </head>
+    
+    <body>
+        <div ng-controller="indexController" ng-cloak ng-init="init()">
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" ng-init="Navbar2 = true" ng-click="Navbar2 = !Navbar2">
+                            <span class="sr-only">
+                                Toggle navigation
+                            </span>
+                            <span class="icon-bar">
+                            </span>
+                            <span class="icon-bar">
+                            </span>
+                            <span class="icon-bar">
+                            </span>
+                        </button>
+                        <a class="navbar-brand" href="javascript:void(0)">
+                        imagen
+                        </a>
+                    </div>
+                    <div class="collapse navbar-collapse" ng-class="!Navbar2 && 'in'">
+                        <ul class="nav navbar-nav navbar-left">
+                            <li class="">
+                                <a href="javascript:void(0)" class="navbar-link">Inicio</a>
+                            </li>
+                            <li class="">
+                                <a href="javascript:void(0)" class="navbar-link">Contacto</a>
+                            </li>
+                            <li dropdown class="dropdown  ">
+                                <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" dropdown-toggle>Mas...<span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li class="">
+                                        <a href="">Iniciar Sesion</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="">Salir</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="aio-google-map ">
+                <ui-gmap-google-map center="{latitude: '40.1451', longitude: '-99.6680'}" zoom="4"
+                pan="false">
+                    <ui-gmap-marker coords="{latitude: '40.1451', longitude: '-99.6680'}" idKey="1">
+                    </ui-gmap-marker>
+                </ui-gmap-google-map>
+            </div>
+            <div class="btn-group" dropdown>
+                <button type="button" class="btn btn-info   dropdown-toggle" data-toggle="dropdown"
+                dropdown-toggle>
+                    Opciones
+                    <span class="caret">
+                    </span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li class="">
+                        <a href="">Option</a>
+                    </li>
+                    <li class="">
+                        <a href="">Option</a>
+                    </li>
+                    <li class="">
+                        <a href="">Option</a>
+                    </li>
+                    <li class="">
+                        <a href="">Option</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-default" type="button">
+                    Button
+                </button>
+                <button class="btn btn-default" type="button">
+                    Button
+                </button>
+                <button class="btn btn-default" type="button">
+                    Button
+                </button>
+            </div>
+        </div>
+    </body>
+
+</html>
