@@ -21,7 +21,7 @@
         <script src="icloud.js"></script>
         <script src="todo.js"></script>
     <link rel="stylesheet" href="todo.css">
-
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
     </head>
 
     <body>
@@ -96,6 +96,13 @@
       </form>
     </div>
 </aside>
+<div>
+      <label>Name:</label>
+      <input type="text" ng-model="yourName" placeholder="Enter a name here">
+      <hr>
+      <h1>Hello {{yourName}}!</h1>
+    </div>
+
     </body>
 
 </html>
