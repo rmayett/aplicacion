@@ -76,7 +76,23 @@
             </div>
         </div>
         <br>
-
+<aside>
+  <div ng-controller="TodoListController as todoList">
+11.      <span>{{todoList.remaining()}} of {{todoList.todos.length}} remaining</span>
+12.      [ <a href="" ng-click="todoList.archive()">archive</a> ]
+13.      <ul class="unstyled">
+14.        <li ng-repeat="todo in todoList.todos">
+15.          <input type="checkbox" ng-model="todo.done">
+16.          <span class="done-{{todo.done}}">{{todo.text}}</span>
+17.        </li>
+18.      </ul>
+19.      <form ng-submit="todoList.addTodo()">
+20.        <input type="text" ng-model="todoList.todoText"  size="30"
+21.               placeholder="add new todo here">
+22.        <input class="btn-primary" type="submit" value="add">
+23.      </form>
+24.    </div>
+</aside>
     </body>
 
 </html>
