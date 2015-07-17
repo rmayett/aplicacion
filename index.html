@@ -74,6 +74,51 @@
                 </ui-gmap-google-map>
             </div>
         </div>
+        <br>
+        <script type="text/javascript">
+        function demoSetUpAuth() {
+
+  // Get the container.
+  var container = CloudKit.getDefaultContainer();
+
+  function gotoAuthenticatedState(userInfo) {
+    if(userInfo.isDiscoverable) {
+      displayUserName(userInfo.firstName + ' ' + userInfo.lastName);
+    } else {
+      displayUserName('User record name: ' + userInfo.userRecordName);
+    }
+    container
+      .whenUserSignsOut()
+      .then(gotoUnauthenticatedState);
+  }
+  function gotoUnauthenticatedState(error) {
+
+    if(error && error.ckErrorCode === 'AUTH_PERSIST_ERROR') {
+      showDialogForPersistError();
+    }
+
+    displayUserName('Unauthenticated User');
+    container
+      .whenUserSignsIn()
+      .then(gotoAuthenticatedState)
+      .catch(gotoUnauthenticatedState);
+  }
+
+  // Check a user is signed in and render the appropriate button.
+  return container.setUpAuth()
+    .then(function(userInfo) {
+
+      // Either a sign-in or a sign-out button was added to the DOM.
+
+      // userInfo is the signed-in user or null.
+      if(userInfo) {
+        gotoAuthenticatedState(userInfo);
+      } else {
+        gotoUnauthenticatedState();
+      }
+    });
+} 
+</script>
     </body>
 
 </html>
