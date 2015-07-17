@@ -76,48 +76,55 @@
         </div>
         <br>
         <script type="text/javascript">
-        function demoSetUpAuth() {
+        function demoPerformQuery() {
+          var container = CloudKit.getDefaultContainer();
+          var publicDB = container.publicCloudDatabase;
 
-  // Get the container.
-  var container = CloudKit.getDefaultContainer();
+          // Get the user's current geolocation.
+          return getUsersPosition().then(function (position) {
 
-  function gotoAuthenticatedState(userInfo) {
-    if(userInfo.isDiscoverable) {
-      displayUserName(userInfo.firstName + ' ' + userInfo.lastName);
-    } else {
-      displayUserName('User record name: ' + userInfo.userRecordName);
-    }
-    container
-      .whenUserSignsOut()
-      .then(gotoUnauthenticatedState);
-  }
-  function gotoUnauthenticatedState(error) {
+            // position is an object containing keys 'latitude' and 'longitude'.
 
-    if(error && error.ckErrorCode === 'AUTH_PERSIST_ERROR') {
-      showDialogForPersistError();
-    }
+            // Set up a query that sorts results in ascending distance from the
+            // user's location.
+            var query = {
+              recordType: 'Items',
+              sortBy: [{
+                fieldName: 'location',
+                relativeLocation: position
+              }]
+            };
 
-    displayUserName('Unauthenticated User');
-    container
-      .whenUserSignsIn()
-      .then(gotoAuthenticatedState)
-      .catch(gotoUnauthenticatedState);
-  }
+            // Execute the query.
+            return publicDB.performQuery(query)
+              .then(function (response) {
+                if(response.hasErrors) {
 
-  // Check a user is signed in and render the appropriate button.
-  return container.setUpAuth()
-    .then(function(userInfo) {
+                  // Handle them in your app.
+                  throw response.errors[0];
 
-      // Either a sign-in or a sign-out button was added to the DOM.
-
-      // userInfo is the signed-in user or null.
-      if(userInfo) {
-        gotoAuthenticatedState(userInfo);
-      } else {
-        gotoUnauthenticatedState();
-      }
-    });
-}
+                } else {
+                  var records = response.records;
+                  var numberOfRecords = records.length;
+                  if (numberOfRecords === 0) {
+                    return render('No matching items')
+                    } else {
+                                var el = render('Found ' + numberOfRecords + ' matching item'
+                                  + (numberOfRecords > 1 ? 's' : ''));
+                                records.forEach(function (record) {
+                                  var fields = record.fields;
+                                  el.appendChild(renderItem(
+                                    fields['name'].value,
+                                    fields['location'].value,
+                                    fields['asset'].value.downloadURL
+                                  ));
+                                });
+                                return el;
+                              }
+                            }
+                          })
+                      });
+                    }
 </script>
     </body>
 
